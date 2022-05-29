@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan AJAX</title>
+</head>
+<body>
+    <h1>Latihan AJAX XMLHttpRequest</h1>
+
+    <button type="button" onclick="fetchData()" id="ambildata">Ambil Data</button>
+
+    <div id="hasil"></div>
+
+    <script>
+        function fetchData() {
+            const xhttp = new XMLHttpRequest();
+            const url = "https://pokeapi.co/api/v2/pokemon?limit=10";
+            const httpMethod = "GET";
+
+            xhttp.onload = function() {
+                // jika respon OK
+                if (this.status === 200) {
+                    const response = JSON.parse(this.responseText);
+                    // console.log(response);
+
+                    // ambil results saja
+                    const results = response.results;
+                    // console.log(data);
+
+                    let data = "";
+                    // looping sepanjang array data
+                    for (let i = 0; i < results.length; i++) {
+                        // ambil nama pokemon   
+                        data += `<p>${results[i].name}</p>`;
+                    }
+                    // tampilkan data ke dalam div
+                    document.getElementById("hasil").innerHTML = data;
+                }
+            }
+
+            xhttp.open(httpMethod, url, true);
+            xhttp.send();
+        }
+    </script>
+    
+</body>
+</html>
